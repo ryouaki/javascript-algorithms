@@ -1,37 +1,32 @@
 /**
  * @param {*[]} comboOptions
  * @param {number} comboLength
- * @param {*[][]} combos
- * @param {*[]} currentCombo
  * @return {*[]}
  */
-function combineRecursively(comboOptions, comboLength, combos = [], currentCombo = []) {
-  if (comboLength === 0) {
-    combos.push(currentCombo);
-
-    return combos;
+export default function combineWithoutRepetitions(comboOptions, comboLength) {
+  // If the length of the combination is 1 then each element of the original array
+  // is a combination itself.
+  if (comboLength === 1) {
+    return comboOptions.map(comboOption => [comboOption]);
   }
 
-  for (let letterIndex = 0; letterIndex <= (comboOptions.length - comboLength); letterIndex += 1) {
-    const letter = comboOptions[letterIndex];
-    const restCombinationOptions = comboOptions.slice(letterIndex + 1);
+  // Init combinations array.
+  const combos = [];
 
-    combineRecursively(
-      restCombinationOptions,
+  // Extract characters one by one and concatenate them to combinations of smaller lengths.
+  // We need to extract them because we don't want to have repetitions after concatenation.
+  comboOptions.forEach((currentOption, optionIndex) => {
+    // Generate combinations of smaller size.
+    const smallerCombos = combineWithoutRepetitions(
+      comboOptions.slice(optionIndex + 1),
       comboLength - 1,
-      combos,
-      currentCombo.concat([letter]),
     );
-  }
+
+    // Concatenate currentOption with all combinations of smaller size.
+    smallerCombos.forEach((smallerCombo) => {
+      combos.push([currentOption].concat(smallerCombo));
+    });
+  });
 
   return combos;
-}
-
-/**
- * @param {*[]} combinationOptions
- * @param {number} combinationLength
- * @return {*[]}
- */
-export default function combineWithoutRepetitions(combinationOptions, combinationLength) {
-  return combineRecursively(combinationOptions, combinationLength);
 }

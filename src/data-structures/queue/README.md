@@ -1,6 +1,10 @@
 # Queue
 
-In computer science, a queue is a particular kind of abstract data 
+_Read this in other languages:_
+[_简体中文_](README.zh-CN.md),
+[_Русский_](README.ru-RU.md)
+
+In computer science, a **queue** is a particular kind of abstract data 
 type or collection in which the entities in the collection are 
 kept in order and the principle (or only) operations on the 
 collection are the addition of entities to the rear terminal 
